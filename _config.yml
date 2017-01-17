@@ -1,0 +1,21 @@
+# Site settings
+title: Dalma's Blog
+header-img: img/home-bg.png
+email: dalma.boros@gmail.com
+copyright_name: dalmaboros
+description: > # this means to ignore newlines until "baseurl:"
+  A record of my studies at Flatiron
+baseurl: "" # the subpath of your site, e.g. /blog
+twitter_username: dalma
+github_username:  dalmaboros
+learn_profile: dalmaboros
+email_username: dalma.boros@gmail.com
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+permalink: pretty
+paginate: 5
+exclude: ["less","node_modules","Gruntfile.js","package.json","README.md"]
+
+gems: [jekyll-paginate, jekyll-feed]
