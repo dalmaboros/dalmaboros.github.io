@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "9 Ways to Learn Effectively"
-date:   2017-03-01 20:03:38 +0000
+date:   2017-03-01 15:03:39 -0500
 ---
 
 
@@ -17,9 +17,9 @@ Before I enrolled in [Flatiron School's](https://flatironschool.com/) [Online We
 * The Focused Mode is a concentrated, focused form of thinking. It lets you 'consume' new topics.
 * The Diffuse Mode is a relaxed, unfocused form of thinking. It helps your brain 'digest' these topics to make new connections with pre-existing neural pathways.
 * Both modes are critical for effective learning.
-* When you start to feel frustrated or 'saturated' it's time to enter the Diffuse Mode. Trying to keep learning at this point will be a waste of your time, it just won't work.
+* When you start to feel frustrated or 'saturated,' it's time to enter the Diffuse Mode. Trying to keep learning at this point will be a waste of your time, it just won't work.
 * Examples of activities that trigger the Diffuse Mode of thinking:
-* * Sleep, exercise, going for a walk, dancing, showering, anything that isn't a focused activity that lets your mind wander
+ * Sleep, exercise, going for a walk, dancing, showering, anything that isn't a focused activity that lets your mind wander
 
 **2. Create Understanding**
 * Ask yourself: Do you really understand the material? Or are you just blindly memorizing?
