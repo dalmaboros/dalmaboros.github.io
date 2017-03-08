@@ -4,7 +4,7 @@ header-img: img/home-bg.png
 email: dalma.boros@gmail.com
 copyright_name: dalmaboros
 description: > # this means to ignore newlines until "baseurl:"
-  A record of my studies at Flatiron
+  A record of the things I learn at Flatiron School
 baseurl: "" # the subpath of your site, e.g. /blog
 twitter_username: dalma
 github_username:  dalmaboros
