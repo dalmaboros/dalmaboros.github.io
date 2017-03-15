@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Is There An Enumerator That Compares Nested Arrays?"
-date:   2017-03-15 17:56:19 +0000
+date:   2017-03-15 13:56:19 -0400
 ---
 
 
@@ -15,21 +15,21 @@ To implement the logic of detecting potential doubles, I first programmed the AI
 
 >```
 > opponent_lines = board.game.win_combos.select do |combo|
->           a = []
->           combo.each do |e|
->             if e!=4
->               a << board.cells[e]
->             end
->           end
->           a.sort == [" ", " ", "#{board.game.opponent.token}"]
->         end
+>    a = []
+>    combo.each do |e|
+>       if e!=4
+>          a << board.cells[e]
+>       end
+>    end
+>    a.sort == [" ", " ", "#{board.game.opponent.token}"]
+> end
 ```
 
 This would return a two-dimensional array containing win combination arrays occupied only by the opponent. 
 
-> ```
-> opponent_lines
-> #=> [[0,1,2],[2,5,8]]
+```
+opponent_lines
+#=> [[0,1,2],[2,5,8]]
 ```
 
 Next I wanted to compare the nested arrays to each other with `&` to check if they intersected at any position on the Tic Tac Toe board. 
