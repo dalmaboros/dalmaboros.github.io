@@ -27,15 +27,21 @@ If gems are useful for bundling libraries of code, why did I bother packaging my
 
 I used the [bundler](https://rubygems.org/gems/bundler) gem to create my house-floor-bills gem. To check if bundler is installed:
 
-`$ gem list`
+```
+$ gem list
+```
 
 If it's not already installed, type into your terminal:
 
-`$ gem install bundler`
+```
+$ gem install bundler
+```
 
 You need to choose a name for your project before you make your gem. Since my gem displays the schedule of bills to be debated on the House of Representatives floor, I named it "house_floor_bills." Convention seems to be that you separate multiple words in a gem name with underscores. 
 
-`$ bundle gem house_floor_bills`
+```
+$ bundle gem house_floor_bills
+```
 
 Next I created an executable file "house-floor-bills" in the `bin` directory. In this file I included a shebang line with a directive to the Ruby interpreter:
 
@@ -52,12 +58,16 @@ require "house_floor_bills"
 
 I needed to grant this file executable permissions, so in the terminal I typed:
 
-`$ chmod +x house-floor-bills`
+```
+$ chmod +x house-floor-bills
+```
 
 At this point I created a remote repository on GitHub, and [added the URL](https://help.github.com/articles/adding-an-existing-project-to-github-using-the-command-line/) for this remote repository to my local repository through the terminal:
 
-`$ git remote add origin URL`
-`$ git push -u origin master`
+```
+$ git remote add origin URL
+$ git push -u origin master
+```
 
 Next, I declared the environment load dependencies. The `lib/house_floor_bills.rb` file acts as the environment file where I declare my program's requirements: 
 
@@ -223,15 +233,21 @@ And I commented out this whole section:
 
 In order to publish a gem, all changes must be commited to your git repository. The gem must also be built and installed locally.
 
-`$ rake build`
+```
+$ rake build
+```
 
 This builds `house_floor_bills-0.1.0.gem` in a `pkg` directory. 
 
-`$ rake install pkg/house_floor_bills-0.1.0.gem`
+```
+$ rake install pkg/house_floor_bills-0.1.0.gem
+```
 
 This installs the gem into the local system gems.
 
-`$ gem push pkg/house_floor_bills-0.1.0.gem`
+```
+$ gem push pkg/house_floor_bills-0.1.0.gem
+```
 
 This pushes the gem onto the [RubyGems public repository](https://rubygems.org/gems). You must have [an account](https://rubygems.org/sign_up) on RubyGems.org to release a gem on its platform. On your first gem release, you will be prompted to enter your RubyGem.org credentials. After you enter your password, your gem will be publicly released on [RubyGems.org](https://rubygems.org/)! 🎉
 
