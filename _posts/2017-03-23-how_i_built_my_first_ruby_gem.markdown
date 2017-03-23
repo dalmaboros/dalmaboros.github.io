@@ -11,7 +11,7 @@ Here is a video demonstrating how the gem works:
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/6LL6yv0-u-4" frameborder="0" allowfullscreen></iframe>
 
-<h1>What is a gem??</h1>
+<h2>What is a gem?</h2>
 
 A gem is a self-contained and distributable bundle of code in the form of either an application (program) or a library of code. So a gem can be one of two things: 1) a stand-alone program that functions autonomously, or 2) a library of code (i.e. a set of reusable functions) you can integrate into your own application. Libraries of code can save you, the developer, time spent writing code from scratch that may have already been written by someone else before. For example, my first Ruby gem makes use of the [Nokogiri](https://rubygems.org/gems/nokogiri/versions/1.6.8) gem.
 
@@ -19,7 +19,7 @@ Nokogiri adds to my application the (reusable) functionality of parsing HTML (an
 
 I didn't set out to create an HTML-parser, I wanted to make a program that displays the House floor schedule. Nokogiri has been around for over 8 years, it's open source and has had numerous contributors, so chances are it's a pretty legit, high-quality gem (spoiler alert: it is). I trust Nokogiri more than I trust myself attempting to write the same functionality it provides. 
 
-**Why did I make a gem?**
+## Why did I make a gem?
 
 If gems are useful for bundling libraries of code, why did I bother packaging my stand-alone application into a gem, instead of leaving it a plain Ruby program? For one, gems are a widely-used tool by Ruby developers, so it's probably a good idea to get some practice and become familiar with making one. Second, public gems are hosted and distrubuted in the RubyGems [public repository](https://rubygems.org/gems) at [RubyGems.org](https://rubygems.org/), a popular resource for Ruby developers. Instead of having my program live in isolation on my local drive, or in obscurity on my personal website, releasing my gem on RubyGems shares it with the world, gives it exposure, and gives it opportunity to be contributed to by other developers.
 
