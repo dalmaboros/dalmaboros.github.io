@@ -11,7 +11,8 @@ Here is a video demonstrating how the gem works:
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/6LL6yv0-u-4" frameborder="0" allowfullscreen></iframe>
 
-<h2>What is a gem?</h2>
+
+## What is a gem?
 
 A gem is a self-contained and distributable bundle of code in the form of either an application (program) or a library of code. So a gem can be one of two things: 1) a stand-alone program that functions autonomously, or 2) a library of code (i.e. a set of reusable functions) you can integrate into your own application. Libraries of code can save you, the developer, time spent writing code from scratch that may have already been written by someone else before. For example, my first Ruby gem makes use of the [Nokogiri](https://rubygems.org/gems/nokogiri/versions/1.6.8) gem.
 
@@ -90,7 +91,7 @@ spec.add_dependency "nokogiri"
 
 Now I was ready to start writing my program code. In reality, I went through several iterations of stubbing, hard-coding, and refactoring until I had what I think is well (enough) written object-oriented code. I won't go into the details of that process, but I'll talk about what I ended up with. 
 
-##How did I code my program?
+## How did I code my program?
 
 My program shows the weekly schedule of bills for consideration on the House Floor. It scrapes the data from the [US House of Representatives](http://docs.house.gov/floor/) website and presents it in a command line interface (CLI). I needed four collaborating objects:
 
@@ -197,7 +198,7 @@ And the scraper object simply instantiates a schedule and assigns data to the sc
 
 The code in its entirety is [viewable on GitHub](https://github.com/dalmaboros/house-floor-bills-cli-gem/). 
 
-### How did I release my gem?
+## How did I release my gem?
 
 Once my program was completed, I was ready to publish. I really wanted my gem to be able to be executed with a simple command in the terminal, such as `$ house-floor-bills`. To achieve this, I changed the following line of code in the Gemspec file:
 
