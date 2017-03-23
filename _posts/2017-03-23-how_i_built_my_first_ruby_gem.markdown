@@ -222,13 +222,13 @@ spec.homepage = "https://github.com/dalmaboros/house-floor-bills-cli-gem"
 And I commented out this whole section:
 
 ```
-  # Prevent pushing this gem to RubyGems.org by setting 'allowed_push_host', or
-  # delete this section to allow pushing this gem to any host.
-  # if spec.respond_to?(:metadata)
-  #   spec.metadata['allowed_push_host'] = "TODO: Set to 'http://mygemserver.com'"
-  # else
-  #   raise "RubyGems 2.0 or newer is required to protect against public gem pushes."
-  # end
+# Prevent pushing this gem to RubyGems.org by setting 'allowed_push_host', or
+# delete this section to allow pushing this gem to any host.
+# if spec.respond_to?(:metadata)
+#   spec.metadata['allowed_push_host'] = "TODO: Set to 'http://mygemserver.com'"
+# else
+#   raise "RubyGems 2.0 or newer is required to protect against public gem pushes."
+# end
 ```
 
 In order to publish a gem, all changes must be commited to your git repository. The gem must also be built and installed locally.
