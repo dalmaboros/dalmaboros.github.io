@@ -11,7 +11,7 @@ Here is a video demonstrating how the gem works:
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/6LL6yv0-u-4" frameborder="0" allowfullscreen></iframe>
 
-# What is a gem??
+#What is a gem??
 
 A gem is a self-contained and distributable bundle of code in the form of either an application (program) or a library of code. So a gem can be one of two things: 1) a stand-alone program that functions autonomously, or 2) a library of code (i.e. a set of reusable functions) you can integrate into your own application. Libraries of code can save you, the developer, time spent writing code from scratch that may have already been written by someone else before. For example, my first Ruby gem makes use of the [Nokogiri](https://rubygems.org/gems/nokogiri/versions/1.6.8) gem.
 
@@ -23,7 +23,7 @@ I didn't set out to create an HTML-parser, I wanted to make a program that displ
 
 If gems are useful for bundling libraries of code, why did I bother packaging my stand-alone application into a gem, instead of leaving it a plain Ruby program? For one, gems are a widely-used tool by Ruby developers, so it's probably a good idea to get some practice and become familiar with making one. Second, public gems are hosted and distrubuted in the RubyGems [public repository](https://rubygems.org/gems) at [RubyGems.org](https://rubygems.org/), a popular resource for Ruby developers. Instead of having my program live in isolation on my local drive, or in obscurity on my personal website, releasing my gem on RubyGems shares it with the world, gives it exposure, and gives it opportunity to be contributed to by other developers.
 
-### How did I make my gem?
+## How did I make my gem?
 
 I used the [bundler](https://rubygems.org/gems/bundler) gem to create my house-floor-bills gem. To check if bundler is installed:
 
@@ -90,7 +90,7 @@ spec.add_dependency "nokogiri"
 
 Now I was ready to start writing my program code. In reality, I went through several iterations of stubbing, hard-coding, and refactoring until I had what I think is well (enough) written object-oriented code. I won't go into the details of that process, but I'll talk about what I ended up with. 
 
-### How did I code my program?
+##How did I code my program?
 
 My program shows the weekly schedule of bills for consideration on the House Floor. It scrapes the data from the [US House of Representatives](http://docs.house.gov/floor/) website and presents it in a command line interface (CLI). I needed four collaborating objects:
 
