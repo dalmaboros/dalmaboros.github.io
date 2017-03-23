@@ -11,7 +11,7 @@ Here is a video demonstrating how the gem works:
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/6LL6yv0-u-4" frameborder="0" allowfullscreen></iframe>
 
-#What is a gem??
+<h1>What is a gem?</h1>
 
 A gem is a self-contained and distributable bundle of code in the form of either an application (program) or a library of code. So a gem can be one of two things: 1) a stand-alone program that functions autonomously, or 2) a library of code (i.e. a set of reusable functions) you can integrate into your own application. Libraries of code can save you, the developer, time spent writing code from scratch that may have already been written by someone else before. For example, my first Ruby gem makes use of the [Nokogiri](https://rubygems.org/gems/nokogiri/versions/1.6.8) gem.
 
