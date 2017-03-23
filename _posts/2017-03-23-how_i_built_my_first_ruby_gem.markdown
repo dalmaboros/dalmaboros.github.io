@@ -19,7 +19,7 @@ Nokogiri adds to my application the (reusable) functionality of parsing HTML (an
 
 I didn't set out to create an HTML-parser, I wanted to make a program that displays the House floor schedule. Nokogiri has been around for over 8 years, it's open source and has had numerous contributors, so chances are it's a pretty legit, high-quality gem (spoiler alert: it is). I trust Nokogiri more than I trust myself attempting to write the same functionality it provides. 
 
-### Why did I make a gem?
+**Why did I make a gem?**
 
 If gems are useful for bundling libraries of code, why did I bother packaging my stand-alone application into a gem, instead of leaving it a plain Ruby program? For one, gems are a widely-used tool by Ruby developers, so it's probably a good idea to get some practice and become familiar with making one. Second, public gems are hosted and distrubuted in the RubyGems [public repository](https://rubygems.org/gems) at [RubyGems.org](https://rubygems.org/), a popular resource for Ruby developers. Instead of having my program live in isolation on my local drive, or in obscurity on my personal website, releasing my gem on RubyGems shares it with the world, gives it exposure, and gives it opportunity to be contributed to by other developers.
 
