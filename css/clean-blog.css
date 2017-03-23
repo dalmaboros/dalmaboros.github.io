@@ -16,12 +16,12 @@ p {
 p a {
   text-decoration: underline;
 }
-h1 {
+h2 {
   font-family: 'Lora', 'Times New Roman', serif;
-  font-size: 24px;
+  font-size: 36px;
   font-weight: bold;
 }
-h2,
+h1,
 h3,
 h4,
 h5,
