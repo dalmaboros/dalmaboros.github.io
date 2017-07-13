@@ -266,11 +266,11 @@ As a web site created for a client, my Sinatra Portfolio Project needed to be us
    ```
 
 10. Visit your app:
-
+   
    ```
    $ heroku open
    ```
-
+   
 11. Ta da!
 
 Hint: I'm no Heroku master (heck, I won't even claim to understand it), but I have found that scaling down to zero dynos, then back up to one, has been helpful in resolving glitches on my app:
@@ -281,6 +281,6 @@ Hint: I'm no Heroku master (heck, I won't even claim to understand it), but I ha
    ```
 
 ## Resources
-- Sickbay CMS Sinatra Portfolio Project: http://www.sickbay.party
-- GitHub repository: https://github.com/dalmaboros/sickbay-shows
-- Video walkthrough: https://www.youtube.com/watch?v=QB-sK-UujMI
+- Sickbay CMS Sinatra Portfolio Project: [http://www.sickbay.party](http://www.sickbay.party)
+- GitHub repository: [https://github.com/dalmaboros/sickbay-shows](https://github.com/dalmaboros/sickbay-shows)
+- Video walkthrough: [https://www.youtube.com/watch?v=QB-sK-UujMI](https://www.youtube.com/watch?v=QB-sK-UujMI)
