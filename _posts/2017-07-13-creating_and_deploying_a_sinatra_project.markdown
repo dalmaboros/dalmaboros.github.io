@@ -281,6 +281,6 @@ Hint: I'm no Heroku master (heck, I won't even claim to understand it), but I ha
    ```
 
 ## Resources
-- Sickbay CMS Sinatra Portfolio Project: [http://www.sickbay.party](http://www.sickbay.party)
-- GitHub repository: [https://github.com/dalmaboros/sickbay-shows](https://github.com/dalmaboros/sickbay-shows)
-- Video walkthrough: [https://www.youtube.com/watch?v=QB-sK-UujMI](https://www.youtube.com/watch?v=QB-sK-UujMI)
+- [Sickbay CMS Sinatra Portfolio Project](http://www.sickbay.party)
+- [GitHub repository](https://github.com/dalmaboros/sickbay-shows)
+- [Video walkthrough](https://www.youtube.com/watch?v=QB-sK-UujMI)
