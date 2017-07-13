@@ -260,11 +260,12 @@ As a web site created for a client, my Sinatra Portfolio Project needed to be us
    ```
 
 9. Instruct Heroku to execute a `web` dyno process type:
+
    ```
    $ heroku ps:scale web=1
    ```
 
-10. Visit your app!
+10. Visit your app:
 
    ```
    $ heroku open
