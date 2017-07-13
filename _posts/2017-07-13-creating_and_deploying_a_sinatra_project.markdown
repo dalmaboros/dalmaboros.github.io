@@ -266,12 +266,12 @@ As a web site created for a client, my Sinatra Portfolio Project needed to be us
    ```
 
 10. Visit your app:
-   
+
    ```
    $ heroku open
    ```
-   
-11. Ta da!
+
+Ta da!
 
 Hint: I'm no Heroku master (heck, I won't even claim to understand it), but I have found that scaling down to zero dynos, then back up to one, has been helpful in resolving glitches on my app:
 
