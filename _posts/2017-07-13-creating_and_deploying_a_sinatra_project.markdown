@@ -46,15 +46,21 @@ All other forms are simple, creating and editing or deleting an instance of one 
 Once the project plan was laid out, I needed to initialize the environment from scratch.
 
 1. Create a project directory `sickbay-shows`
+
 2. Initialize a git repository and [add the project to GitHub](https://help.github.com/articles/adding-an-existing-project-to-github-using-the-command-line/)
+
 3. Create a `Gemfile` containing the following code:
+
    ```
    source 'http://rubygems.org'
    
    gem 'sinatra'
    ```
+	 
 4. Run `$ bundle install` in the terminal's command line (this creates the `Gemfile.lock` file).
+
 5. Create `config.ru` file in the main directory, containing the following code (grabbed from a previous Sinatra lab):
+
    ```
    require './config/environment'
    
@@ -70,8 +76,10 @@ Once the project plan was laid out, I needed to initialize the environment from 
    use UsersController
    run ApplicationController
    ```
+	 
 6. Create the `config/environment.rb` file (again, grabbing code from a previous Sinatra lab):
-   ```
+   
+	 ```
    ENV['SINATRA_ENV'] ||= "development"
 
    require 'bundler/setup'
@@ -84,8 +92,10 @@ Once the project plan was laid out, I needed to initialize the environment from 
    
    require_all 'app'
    ```
-7. Add gem dependencies in `Gemfile`
-   ```
+	 
+7. Add gem dependencies in the `Gemfile`:
+   
+	 ```
    gem 'sinatra'
    gem 'activerecord', :require => 'active_record'
    gem 'sinatra-activerecord', :require => 'sinatra/activerecord'
@@ -99,7 +109,8 @@ Once the project plan was laid out, I needed to initialize the environment from 
    gem 'sqlite3'
    gem 'thin'
    ```
-8. Create the MVC paradigm (models and their associations, respective controllers, and views)
+	 
+8. Create the MVC paradigm (models and their associations, respective controllers, and views):
 
    ```
    ├── app
@@ -210,21 +221,27 @@ Once the project plan was laid out, I needed to initialize the environment from 
    ```
 
 9. Run migrations with `$ rake db:migrate`
-10. Create `db/seed.rb` file, and seed database with `$ rake db:seed` (optional, but helpful)
+
+10. Create `db/seed.rb` file, and seed database with `$ rake db:seed` (optional, but helpful).
+
 11. Write controllers and views.
 
 ## Deploying A Sinatra App On Heroku
 
 As a web site created for a client, my Sinatra Portfolio Project needed to be useable. [This article](https://devcenter.heroku.com/articles/getting-started-with-ruby-o) from the Heroku documentation is a helpful guide on how to deploy an app on their platform. In brief, you must:
+
 1. [Create an account on Heroku](https://signup.heroku.com/dc)
+
 2. [Download the Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli#download-and-install)
+
 3. Log in to Heroku with your credentials from the command shell:
 
    ```
    $ heroku login
    ```
 
-4. Add `ruby 2.3.0` (or desired version) to the `Gemfile`
+4. Add `ruby 2.3.0` (or desired version) to the `Gemfile`.
+
 5. Create a `Procfile` in the project's root directory with the following code: 
 
    ```
@@ -232,7 +249,9 @@ As a web site created for a client, my Sinatra Portfolio Project needed to be us
    ```
 
 6. Make sure to switch from SQLite3, which is unsupported by Heroku, to PostgreSQL (two helpful guides: [1](http://recipes.sinatrarb.com/p/databases/postgresql-activerecord), [2](https://devcenter.heroku.com/articles/sqlite3))
+
 7. Push your project to your remote git repository
+
 8. Deploy your app to Heroku!
 
    ```
