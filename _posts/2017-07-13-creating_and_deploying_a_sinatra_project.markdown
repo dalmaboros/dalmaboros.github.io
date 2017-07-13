@@ -1,14 +1,14 @@
 ---
 layout: post
 title:  "Creating and Deploying a Sinatra Project"
-date:   2017-07-13 17:02:48 +0000
+date:   2017-07-13 13:02:49 -0400
 ---
 
 
 ## Introduction
 I created a Sinatra-based web application for my end-of-unit Sinatra Portfolio Project. It is a content management system (CMS) for Sickbay, an ongoing series of live alternative music events in Lafayette, Louisiana. The app is designed to allow the organizer of Sickbay to easily create, read, update, and delete shows and news items, as well as artists and venues.
 
-I deployed the app to Heroku, and it is viewable at http://www.sickbay.party.
+I deployed the app to [Heroku](http://www.heroku.com), and it is viewable at [http://www.sickbay.party](http://www.sickbay.party).
 
 This video walkthrough demonstrates how to use the app:
 
@@ -18,7 +18,7 @@ This video walkthrough demonstrates how to use the app:
 Before writing any code, I created an outline of the project's models and their associations:
 
 - Models: 
- - `Show`, `Artist`, `Venue`, `News`, and `User`
+   - `Show`, `Artist`, `Venue`, `News`, and `User`
 - Associations:
  - A `show` has many `artists` and an `artist` has many `shows` (many to many)
  - A `show` belongs to a `venue`, and a `venue` has many `shows` (belongs to, has many)
