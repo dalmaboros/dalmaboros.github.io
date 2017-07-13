@@ -20,21 +20,21 @@ Before writing any code, I created an outline of the project's models and their 
 - Models: 
    - `Show`, `Artist`, `Venue`, `News`, and `User`
 - Associations:
- - A `show` has many `artists` and an `artist` has many `shows` (many to many)
- - A `show` belongs to a `venue`, and a `venue` has many `shows` (belongs to, has many)
- - A `venue` has many `artists` through `shows`, an `artist` has many venues through `shows` (has many through)
- - A `user` and a `news` item have no relationships with other models
+   - A `show` has many `artists` and an `artist` has many `shows` (many to many)
+   - A `show` belongs to a `venue`, and a `venue` has many `shows` (belongs to, has many)
+   - A `venue` has many `artists` through `shows`, an `artist` has many venues through `shows` (has many through)
+   - A `user` and a `news` item have no relationships with other models
 
 I created a `show_artists` join table and `ShowArtists` model to support the many to many relationship between `shows` and `artists`
 
 I then considered the functionality I wanted the application to have. A logged-in user should be able to create, read, update, and delete instances of all models. When not logged in, a visitor should only be able to read a listing of shows and news items. 
 
 - There is a total of 15 forms in this project:
- - Create show, edit show, delete show
- - Create artist, edit artist, delete artist
- - Create venue, edit venue, delete venue
- - Create news, edit news, delete news
- - Create user, edit user, delete user
+   - Create show, edit show, delete show
+   - Create artist, edit artist, delete artist
+   - Create venue, edit venue, delete venue
+   - Create news, edit news, delete news
+   - Create user, edit user, delete user
 
 Since creating show listings is the main feature of the application, the form to create a show is a complex form. A user can create a new venue and one or multiple new artists when creating a new show.
 
