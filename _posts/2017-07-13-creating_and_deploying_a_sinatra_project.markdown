@@ -101,113 +101,113 @@ Once the project plan was laid out, I needed to initialize the environment from 
    ```
 8. Create the MVC paradigm (models and their associations, respective controllers, and views)
 
-```
-├── app
-│   ├── controllers
-│   │   ├── application_controller.rb
-│   │   ├── artists_controller.rb
-│   │   ├── news_controller.rb
-│   │   ├── shows_controller.rb
-│   │   ├── users_controller.rb
-│   │   └── venues_controller.rb
-│   ├── models
-│   │   ├── concerns
-│   │   │   └── slugifiable.rb
-│   │   ├── artist.rb
-│   │   ├── news.rb
-│   │   ├── show_artist.rb
-│   │   ├── show.rb
-│   │   ├── user.rb
-│   │   └── venue.rb
-│   └── views
-│       ├── artists
-│       │   ├── artist_index.erb
-│       │   ├── create_artist.erb
-│       │   ├── edit_artist.erb
-│       │   └── show_artist.erb
-│       ├── news
-│       │   ├── create_news.erb
-│       │   ├── edit_news.erb
-│       │   └── news_index.erb
-│       ├── shows
-│       │   ├── create_show.erb
-│       │   ├── edit_show.erb
-│       │   ├── not_found.erb
-│       │   ├── show_show.erb
-│       │   └── shows_index.erb
-│       ├── users
-│       │   ├── create_user.erb
-│       │   └── edit_user.erb
-│       ├── venues
-│       │   ├── create_venue.erb
-│       │   ├── edit_venue.erb
-│       │   ├── show_venue.erb
-│       │   └── venues_index.erb
-│       ├── backdoor.erb
-│       ├── dashboard.erb
-│       ├── layout.erb
-│       └── login.erb
-```
+   ```
+   ├── app
+   │   ├── controllers
+   │   │   ├── application_controller.rb
+   │   │   ├── artists_controller.rb
+   │   │   ├── news_controller.rb
+   │   │   ├── shows_controller.rb
+   │   │   ├── users_controller.rb
+   │   │   └── venues_controller.rb
+   │   ├── models
+   │   │   ├── concerns
+   │   │   │   └── slugifiable.rb
+   │   │   ├── artist.rb
+   │   │   ├── news.rb
+   │   │   ├── show_artist.rb
+   │   │   ├── show.rb
+   │   │   ├── user.rb
+   │   │   └── venue.rb
+   │   └── views
+   │       ├── artists
+   │       │   ├── artist_index.erb
+   │       │   ├── create_artist.erb
+   │       │   ├── edit_artist.erb
+   │       │   └── show_artist.erb
+   │       ├── news
+   │       │   ├── create_news.erb
+   │       │   ├── edit_news.erb
+   │       │   └── news_index.erb
+   │       ├── shows
+   │       │   ├── create_show.erb
+   │       │   ├── edit_show.erb
+   │       │   ├── not_found.erb
+   │       │   ├── show_show.erb
+   │       │   └── shows_index.erb
+   │       ├── users
+   │       │   ├── create_user.erb
+   │       │   └── edit_user.erb
+   │       ├── venues
+   │       │   ├── create_venue.erb
+   │       │   ├── edit_venue.erb
+   │       │   ├── show_venue.erb
+   │       │   └── venues_index.erb
+   │       ├── backdoor.erb
+   │       ├── dashboard.erb
+   │       ├── layout.erb
+   │       └── login.erb
+   ```
 
 9. Create a `Rakefile` containing the following code (grabbed from a previous Sinatra lab):
 
-```
-ENV["SINATRA_ENV"] ||= "development"
-
-require_relative './config/environment'
-require 'sinatra/activerecord/rake'
-
-# Type `rake -T` on your command line to see the available rake tasks.
-
-task :console do
-  Pry.start
-end
-```
+   ```
+   ENV["SINATRA_ENV"] ||= "development"
+   
+   require_relative './config/environment'
+   require 'sinatra/activerecord/rake'
+   
+   # Type `rake -T` on your command line to see the available rake tasks.
+   
+   task :console do
+     Pry.start
+   end
+   ```
 
 8. Create migrations in `db/migrate` directory:
 
-```
-create_table :shows do |t|
-   t.string :date
-   t.integer :venue_id
-   t.string :url
+   ```
+   create_table :shows do |t|
+      t.string :date
+      t.integer :venue_id
+      t.string :url
       
-   t.timestamps null: false
-end
-
-create_table :artists do |t|
-   t.string :name
+      t.timestamps null: false
+   end
+   
+   create_table :artists do |t|
+      t.string :name
       
-   t.timestamps null: false
-end
+      t.timestamps null: false
+   end
 		
-create_table :venues do |t|
-   t.string :name
+   create_table :venues do |t|
+      t.string :name
       
-   t.timestamps null: false
-end
-
-create_table :show_artists do |t|
-   t.integer :show_id
-   t.integer :artist_id
+      t.timestamps null: false
+   end
+   
+   create_table :show_artists do |t|
+      t.integer :show_id
+      t.integer :artist_id
       
-   t.timestamps null: false
-end
-
-create_table :users do |t|
-   t.string :username
-   t.string :email
-   t.string :password_digest
-end
-
-create_table :news do |t|
-   t.string :date
-   t.string :content
-   t.string :url
-
-   t.timestamps null: false
-end
-```
+      t.timestamps null: false
+   end
+   
+   create_table :users do |t|
+      t.string :username
+      t.string :email
+      t.string :password_digest
+   end
+   
+   create_table :news do |t|
+      t.string :date
+      t.string :content
+      t.string :url
+   
+      t.timestamps null: false
+   end
+   ```
 
 9. Run migrations with `$ rake db:migrate`
 10. Create `db/seed.rb` file, and seed database with `$ rake db:seed` (optional, but helpful)
@@ -220,45 +220,45 @@ As a web site created for a client, my Sinatra Portfolio Project needed to be us
 2. [Download the Heroku CLI](https://devcenter.heroku.com/articles/heroku-cli#download-and-install)
 3. Log in to Heroku with your credentials from the command shell:
 
-```
-$ heroku login
-```
+   ```
+   $ heroku login
+   ```
 
 4. Add `ruby 2.3.0` (or desired version) to the `Gemfile`
 5. Create a `Procfile` in the project's root directory with the following code: 
 
-```
-web: bundle exec rackup config.ru -p $PORT`
-```
+   ```
+   web: bundle exec rackup config.ru -p $PORT`
+   ```
 
 6. Make sure to switch from SQLite3, which is unsupported by Heroku, to PostgreSQL (two helpful guides: [1](http://recipes.sinatrarb.com/p/databases/postgresql-activerecord), [2](https://devcenter.heroku.com/articles/sqlite3))
 7. Push your project to your remote git repository
 8. Deploy your app to Heroku!
 
-```
-$ heroku create
-$ git push heroku master
-```
+   ```
+   $ heroku create
+   $ git push heroku master
+   ```
 
 9. Instruct Heroku to execute a `web` dyno process type:
-```
-$ heroku ps:scale web=1
-```
+   ```
+   $ heroku ps:scale web=1
+   ```
 
 10. Visit your app!
 
-```
-$ heroku open
-```
+   ```
+   $ heroku open
+   ```
 
 Ta da!
 
 Hint: I'm no Heroku master (heck, I won't even claim to understand it), but I have found that scaling down to zero dynos, then back up to one, has been helpful in resolving glitches on my app:
 
-```
-$ heroku ps:scale web=0
-$ heroku ps:scale web=1
-```
+   ```
+   $ heroku ps:scale web=0
+   $ heroku ps:scale web=1
+   ```
 
 ## Resources
 - Sickbay CMS Sinatra Portfolio Project: http://www.sickbay.party
