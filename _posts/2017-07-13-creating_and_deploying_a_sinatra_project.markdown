@@ -50,11 +50,11 @@ Once the project plan was laid out, I needed to initialize the environment from 
 3. Create a `Gemfile` containing the following code:
 
 
-```
-source 'http://rubygems.org'
-
-gem 'sinatra'
-```
+   ```
+   source 'http://rubygems.org'
+   
+   gem 'sinatra'
+   ```
 
 4. Run `$ bundle install` in the terminal's command line (this creates the `Gemfile.lock` file).
 5. Create `config.ru` file in the main directory, containing the following code (grabbed from a previous Sinatra lab):
