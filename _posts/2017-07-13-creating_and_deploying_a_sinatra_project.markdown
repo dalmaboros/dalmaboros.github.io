@@ -48,66 +48,57 @@ Once the project plan was laid out, I needed to initialize the environment from 
 1. Create a project directory `sickbay-shows`
 2. Initialize a git repository and [add the project to GitHub](https://help.github.com/articles/adding-an-existing-project-to-github-using-the-command-line/)
 3. Create a `Gemfile` containing the following code:
-
-
    ```
    source 'http://rubygems.org'
    
    gem 'sinatra'
    ```
-
 4. Run `$ bundle install` in the terminal's command line (this creates the `Gemfile.lock` file).
 5. Create `config.ru` file in the main directory, containing the following code (grabbed from a previous Sinatra lab):
-
-```
-require './config/environment'
-
-if ActiveRecord::Migrator.needs_migration?
-  raise 'Migrations are pending. Run `rake db:migrate` to resolve the issue.'
-end
-
-use Rack::MethodOverride
-use ShowsController
-use ArtistsController
-use VenuesController
-use NewsController
-use UsersController
-run ApplicationController
-```
-
+   ```
+   require './config/environment'
+   
+   if ActiveRecord::Migrator.needs_migration?
+     raise 'Migrations are pending. Run `rake db:migrate` to resolve the issue.'
+   end
+   
+   use Rack::MethodOverride
+   use ShowsController
+   use ArtistsController
+   use VenuesController
+   use NewsController
+   use UsersController
+   run ApplicationController
+   ```
 6. Create the `config/environment.rb` file (again, grabbing code from a previous Sinatra lab):
+   ```
+   ENV['SINATRA_ENV'] ||= "development"
 
-```
-ENV['SINATRA_ENV'] ||= "development"
-
-require 'bundler/setup'
-Bundler.require(:default, ENV['SINATRA_ENV'])
-
-ActiveRecord::Base.establish_connection(
-  :adapter => "sqlite3",
-  :database => "db/#{ENV['SINATRA_ENV']}.sqlite"
-)
-
-require_all 'app'
-```
-
+   require 'bundler/setup'
+   Bundler.require(:default, ENV['SINATRA_ENV'])
+   
+   ActiveRecord::Base.establish_connection(
+     :adapter => "sqlite3",
+     :database => "db/#{ENV['SINATRA_ENV']}.sqlite"
+   )
+   
+   require_all 'app'
+   ```
 7. Add gem dependencies in `Gemfile`
-
-```
-gem 'sinatra'
-gem 'activerecord', :require => 'active_record'
-gem 'sinatra-activerecord', :require => 'sinatra/activerecord'
-gem 'i18n'
-gem 'bcrypt'
-gem 'pry'
-gem 'rack-flash3'
-gem 'rake'
-gem 'require_all'
-gem 'shotgun'
-gem 'sqlite3'
-gem 'thin'
-```
-
+   ```
+   gem 'sinatra'
+   gem 'activerecord', :require => 'active_record'
+   gem 'sinatra-activerecord', :require => 'sinatra/activerecord'
+   gem 'i18n'
+   gem 'bcrypt'
+   gem 'pry'
+   gem 'rack-flash3'
+   gem 'rake'
+   gem 'require_all'
+   gem 'shotgun'
+   gem 'sqlite3'
+   gem 'thin'
+   ```
 8. Create the MVC paradigm (models and their associations, respective controllers, and views)
 
 ```
@@ -156,7 +147,6 @@ gem 'thin'
 │       ├── dashboard.erb
 │       ├── layout.erb
 │       └── login.erb
-
 ```
 
 9. Create a `Rakefile` containing the following code (grabbed from a previous Sinatra lab):
