@@ -271,7 +271,7 @@ As a web site created for a client, my Sinatra Portfolio Project needed to be us
    $ heroku open
    ```
 
-Ta da!
+11. Ta da!
 
 Hint: I'm no Heroku master (heck, I won't even claim to understand it), but I have found that scaling down to zero dynos, then back up to one, has been helpful in resolving glitches on my app:
 
