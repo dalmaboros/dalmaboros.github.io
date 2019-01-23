@@ -1,7 +1,7 @@
 ---
 layout: post
 title:      "What Is `remote: true` And Why Can't I Use It?"
-date:       2019-01-11 14:45:49 +0000
+date:       2019-01-11 09:45:49 -0500
 permalink:  what_is_remote_true_and_why_cant_i_use_it
 ---
 
@@ -12,7 +12,7 @@ Amongst the many technical requirements for the Rails With JavaScript portfolio 
 
 I immediately want to use `remote: true`. But I don't know what it is. If I at one point learned what this is, I can't remember. A Google search for "remote: true" yields some [barely-there Rails documentation](https://guides.rubyonrails.org/working_with_javascript_in_rails.html#link-to) on Rails Guides, and a handful of more promising articles entitled [*AJAX and Rails: Demystifying :remote => true*](https://medium.com/@AdamKing0126/ajax-and-rails-demystifying-remote-true-fe51ba2ce819), [*How to Use remote: true to Make Ajax Calls in Rails*](https://medium.com/@codenode/how-to-use-remote-true-to-make-ajax-calls-in-rails-3ecbed40869b), and [*:remote => true in Rails Forms*](http://www.korenlc.com/remote-true-in-rails-forms/).
 
-By this limited information I can gather that `remote: true` is used to make AJAX calls in Rails. But this inference doesn't give me a solid grasp on the concept, so I am forced to read at least one of these articles.
+By this limited information I can gather that `remote: true` is used to make AJAX calls in Rails. Unfortunately this deduction doesn't give me a solid grasp on the concept, so I am forced to read at least one of these articles.
 
 ## What is `remote: true`?
 
@@ -34,7 +34,7 @@ The `remote: true` helper does nothing on the server side. It doesn't handle the
 
 ## And Why Can't I Use It?
 
-The `remote: true` helper is a "Rails magic" shortcut for sending asynchronous web requests to the server. It eliminates the need to code out explicit asynchronous web requests, such as:
+The `remote: true` helper is a "Rails magic" shortcut for sending asynchronous web requests to the server. It eliminates the need to code out explicit asynchronous web requests, such as the following jQuery `$.ajax` request:
 
 ```
 $(function(){
@@ -52,7 +52,7 @@ $(function(){
 })
 ```
 
-Instead, the `remote: true` helper can be added to a `form_for` helper:
+Instead, the above code need not be written if we simply add the `remote: true` helper to a `form_for` helper:
 
 ```
 <%= form_for @article, :remote => true do |f| %>
@@ -63,4 +63,4 @@ Instead, the `remote: true` helper can be added to a `form_for` helper:
 
 Both methods allow form data to be submitted to the server without refreshing the page.
 
-The Rails with JavaScript portfolio project is an exercise in understanding how to add dynamic features to a Rails application that are possible only through JavaScript and a JSON API. Without the use of `remote: true`, we are forced to explicitly code  asynchronous web requests such as `jQuery.ajax()` or `fetch()`. Like many other "Rails magic" shortcuts introduced to us in the [Learn.co](http://learn.co) curriculum, we don't use it so we can understand how it works. 
+The Rails with JavaScript portfolio project is an exercise in understanding how to add dynamic features to a Rails application that are possible only through JavaScript and a JSON API. Without the use of `remote: true`, we are forced to explicitly code asynchronous web requests such as `jQuery.ajax()` or `fetch()`. Like many other "Rails magic" shortcuts introduced to us in the [Learn.co](http://learn.co) curriculum, we don't use it so we can understand how it works. 
