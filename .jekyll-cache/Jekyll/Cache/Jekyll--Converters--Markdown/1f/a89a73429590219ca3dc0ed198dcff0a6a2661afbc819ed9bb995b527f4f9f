@@ -1,0 +1,229 @@
+I"�8<p>I built a Ruby command line interface (CLI) gem application as my first portfolio project in the <a href="https://flatironschool.com/programs/online-web-developer-career-course/">Online Web Development Program</a> at <a href="https://flatironschool.com/">Flatiron School</a>. I created a program that displays the weekly schedule of bills to be debated on the United States House of Representatives floor. It pulls data from the <a href="http://docs.house.gov/floor/">House Floor</a> web page, as well as from individual bill pages on <a href="https://www.congress.gov/">Congress.gov</a>. Interestingly, the House Floor schedule does not provide links to the individual bill pages. Fortunately, my program does!</p>
+
+<p>Here is a video demonstrating how the gem works:</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/6LL6yv0-u-4" frameborder="0" allowfullscreen=""></iframe>
+
+<h2 id="what-is-a-gem">What is a gem?</h2>
+
+<p>A gem is a self-contained and distributable bundle of code in the form of either an application (program) or a library of code. So a gem can be one of two things: 1) a stand-alone program that functions autonomously, or 2) a library of code (i.e. a set of reusable functions) you can integrate into your own application. Libraries of code can save you, the developer, time spent writing code from scratch that may have already been written by someone else before. For example, my first Ruby gem makes use of the <a href="https://rubygems.org/gems/nokogiri/versions/1.6.8">Nokogiri</a> gem.</p>
+
+<p>Nokogiri adds to my application the (reusable) functionality of parsing HTML (and XML, SAX, and Reader) files. Theoretically,  I myself could have written the code that parses HTML files (<em>ha!</em>) for my application, but that would take a very long time, and it probably wouldn’t have made my program any better. It’s akin to making pasta from scratch when you can buy fresh pasta from the grocery store. Or spinning your own wool when you can buy yarn at the craft store. If all you want is spaghetti dinner, buying that ready-made pasta saves you a lot of time and effort. Likewise, you don’t need to make yarn if you just want to knit a scarf.</p>
+
+<p>I didn’t set out to create an HTML-parser, I wanted to make a program that displays the House floor schedule. Nokogiri has been around for over 8 years, it’s open source and has had numerous contributors, so chances are it’s a pretty legit, high-quality gem (spoiler alert: it is). I trust Nokogiri more than I trust myself attempting to write the same functionality it provides.</p>
+
+<h2 id="why-did-i-make-a-gem">Why did I make a gem?</h2>
+
+<p>If gems are useful for bundling libraries of code, why did I bother packaging my stand-alone application into a gem, instead of leaving it a plain Ruby program? For one, gems are a widely-used tool by Ruby developers, so it’s probably a good idea to get some practice and become familiar with making one. Second, public gems are hosted and distrubuted in the RubyGems <a href="https://rubygems.org/gems">public repository</a> at <a href="https://rubygems.org/">RubyGems.org</a>, a popular resource for Ruby developers. Instead of having my program live in isolation on my local drive, or in obscurity on my personal website, releasing my gem on RubyGems shares it with the world, gives it exposure, and gives it opportunity to be contributed to by other developers.</p>
+
+<h2 id="how-did-i-make-my-gem">How did I make my gem?</h2>
+
+<p>I used the <a href="https://rubygems.org/gems/bundler">bundler</a> gem to create my house-floor-bills gem. To check if bundler is installed:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ gem list
+</code></pre></div></div>
+
+<p>If it’s not already installed, type into your terminal:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ gem install bundler
+</code></pre></div></div>
+
+<p>You need to choose a name for your project before you make your gem. Since my gem displays the schedule of bills to be debated on the House of Representatives floor, I named it “house_floor_bills.” Convention seems to be that you separate multiple words in a gem name with underscores.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ bundle gem house_floor_bills
+</code></pre></div></div>
+
+<p>Next I created an executable file “house-floor-bills” in the <code class="highlighter-rouge">bin</code> directory. In this file I included a shebang line with a directive to the Ruby interpreter:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#!/usr/bin/env ruby</span>
+</code></pre></div></div>
+
+<p>And I declared some dependencies:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>require "bundler/setup"
+require "house_floor_bills"
+</code></pre></div></div>
+
+<p>I needed to grant this file executable permissions, so in the terminal I typed:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ chmod +x house-floor-bills
+</code></pre></div></div>
+
+<p>At this point I created a remote repository on GitHub, and <a href="https://help.github.com/articles/adding-an-existing-project-to-github-using-the-command-line/">added the URL</a> for this remote repository to my local repository through the terminal:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ git remote add origin URL
+$ git push -u origin master
+</code></pre></div></div>
+
+<p>Next, I declared the environment load dependencies. The <code class="highlighter-rouge">lib/house_floor_bills.rb</code> file acts as the environment file where I declare my program’s requirements:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>require "open-uri"
+require "nokogiri"
+require "pry"
+
+require_relative "./house_floor_bills/version"
+</code></pre></div></div>
+
+<p><em>Note that <code class="highlighter-rouge">lib/housefloorbills/version.rb</code> was created automatically by bundler when I created the gem.</em></p>
+
+<p>To successfully include <a href="https://rubygems.org/gems/nokogiri">Nokogiri</a> and <a href="https://rubygems.org/gems/pry">Pry</a> in my project, I needed to also add the dependancies in my <code class="highlighter-rouge">house_floor_bills.gemspec</code> Gemspec file:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>spec.add_development_dependency "pry"
+spec.add_dependency "nokogiri"
+</code></pre></div></div>
+
+<p>Now I was ready to start writing my program code. In reality, I went through several iterations of stubbing, hard-coding, and refactoring until I had what I think is well (enough) written object-oriented code. I won’t go into the details of that process, but I’ll talk about what I ended up with.</p>
+
+<h2 id="how-did-i-code-my-program">How did I code my program?</h2>
+
+<p>My program shows the weekly schedule of bills for consideration on the House Floor. It scrapes the data from the <a href="http://docs.house.gov/floor/">US House of Representatives</a> website and presents it in a command line interface (CLI). I needed four collaborating objects:</p>
+
+<ol>
+  <li>A scraper object</li>
+  <li>A schedule object</li>
+  <li>A bill object</li>
+  <li>A CLI object</li>
+</ol>
+
+<p>The scraper object is responsible for scraping both schedule data and bill data from the web. The schedule object is responsible for containing bills. The bill object is responsible for containing its own attributes. Finally, the CLI object is responsible for providing an interface for the user to access the schedule and bill data. So the scraper knows about both the schedule and bill objects, the schedule knows about the bill object, the bill only knows about itself, and the CLI only knows about the schedule object.</p>
+
+<p>I started with the CLI object. I defined the <code class="highlighter-rouge">HouseFloorBills::CLI</code> class within the <code class="highlighter-rouge">lib/house_floor_bills/cli.rb</code> file:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class HouseFloorBills::CLI
+
+  def call
+    welcome
+    list_bills
+    menu
+  end
+
+  def welcome
+    puts "\n************* Welcome to House Floor Bills *************"
+    puts "\nSee which bills are scheduled for debate on the House of Representatives floor."
+  end
+
+  def list_bills
+    ...
+  end
+
+  def menu
+   ...
+  end
+
+end
+</code></pre></div></div>
+
+<p>Back in my <code class="highlighter-rouge">bin/house-floor-bills</code> executable file, I called the newly defined <code class="highlighter-rouge">#call</code> method:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>HouseFloorBills::CLI.new.call
+</code></pre></div></div>
+
+<p>This is really the only method called in <code class="highlighter-rouge">cli.rb</code>, and this method initiates the whole program upon opening <code class="highlighter-rouge">bin/house-floor-bills</code>. But in order for this to work I needed to tell my program that this file exists, and it is dependent upon it. So in my <code class="highlighter-rouge">lib/house_floor_bills.rb</code> file I declared the dependency:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>require_relative "./house_floor_bills/cli"
+</code></pre></div></div>
+
+<p>I repeated this for the other three objects:</p>
+
+<ol>
+  <li>I defined the <code class="highlighter-rouge">HouseFloorBills::Scraper</code> class in a file named <code class="highlighter-rouge">lib/house_floor_bills/scraper.rb</code>.</li>
+  <li>I defined the <code class="highlighter-rouge">HouseFloorBills::Schedule</code> class in a file named <code class="highlighter-rouge">lib/house_floor_bills/schedule.rb</code>.</li>
+  <li>I defined the <code class="highlighter-rouge">HouseFloorBills::Bill</code> class in a file named <code class="highlighter-rouge">lib/house_floor_bills/bill.rb</code>.</li>
+</ol>
+
+<p>And I declared the dependencies in the <code class="highlighter-rouge">lib/house_floor_bills.rb</code> file:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>require_relative "./house_floor_bills/bill"
+require_relative "./house_floor_bills/scraper"
+require_relative "./house_floor_bills/schedule"
+</code></pre></div></div>
+
+<p>The bill object is only responsible for containing its own attributes:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class HouseFloorBills::Bill
+  attr_accessor :number, :name, :pdf, :url, :sponsor, :committees, :status, :summary
+
+end
+</code></pre></div></div>
+
+<p>The schedule object is responsible for containing (reading, writing, and validating) bills:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class InvalidType &lt; StandardError; end
+
+class HouseFloorBills::Schedule
+  attr_accessor :title, :week, :published, :last_updated
+
+  def initialize
+    @bills = []
+  end
+
+  def bills
+    @bills.dup.freeze
+  end
+
+  def find_bill(id)
+    @bills[id.to_i-1]
+  end
+
+  def add_bill(bill)
+    if !bill.is_a?(HouseFloorBills::Bill) #&amp;&amp; !bill.title.empty?
+      raise InvalidType, "must be a Bill"
+    else
+      @bills &lt;&lt; bill
+    end
+  end
+end
+</code></pre></div></div>
+
+<p>And the scraper object simply instantiates a schedule and assigns data to the schedule and bill attributes.</p>
+
+<p>The code in its entirety is <a href="https://github.com/dalmaboros/house-floor-bills-cli-gem/">viewable on GitHub</a>.</p>
+
+<h2 id="how-did-i-release-my-gem">How did I release my gem?</h2>
+
+<p>Once my program was completed, I was ready to publish. I really wanted my gem to be able to be executed with a simple command in the terminal, such as <code class="highlighter-rouge">$ house-floor-bills</code>. To achieve this, I changed the following line of code in the Gemspec file:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>spec.executables = ["house-floor-bills"]
+</code></pre></div></div>
+
+<p>I also removed this line of code:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>spec.bindir = "exe"
+</code></pre></div></div>
+
+<p>I updated these lines in the Gemspec:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>spec.summary = %q{Bills to be considered on the house floor.}
+spec.description = %q{Legislative bills scheduled for debate this week on the United States House of Representatives floor.}
+spec.homepage = "https://github.com/dalmaboros/house-floor-bills-cli-gem"
+</code></pre></div></div>
+
+<p>And I commented out this whole section:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># Prevent pushing this gem to RubyGems.org by setting 'allowed_push_host', or
+# delete this section to allow pushing this gem to any host.
+# if spec.respond_to?(:metadata)
+#   spec.metadata['allowed_push_host'] = "TODO: Set to 'http://mygemserver.com'"
+# else
+#   raise "RubyGems 2.0 or newer is required to protect against public gem pushes."
+# end
+</code></pre></div></div>
+
+<p>In order to publish a gem, all changes must be commited to your git repository. The gem must also be built and installed locally.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ rake build
+</code></pre></div></div>
+
+<p>This builds <code class="highlighter-rouge">house_floor_bills-0.1.0.gem</code> in a <code class="highlighter-rouge">pkg</code> directory.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ rake install pkg/house_floor_bills-0.1.0.gem
+</code></pre></div></div>
+
+<p>This installs the gem into the local system gems.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ gem push pkg/house_floor_bills-0.1.0.gem
+</code></pre></div></div>
+
+<p>This pushes the gem onto the <a href="https://rubygems.org/gems">RubyGems public repository</a>. You must have <a href="https://rubygems.org/sign_up">an account</a> on RubyGems.org to release a gem on its platform. On your first gem release, you will be prompted to enter your RubyGem.org credentials. After you enter your password, your gem will be publicly released on <a href="https://rubygems.org/">RubyGems.org</a>! 🎉</p>
+
+:ET

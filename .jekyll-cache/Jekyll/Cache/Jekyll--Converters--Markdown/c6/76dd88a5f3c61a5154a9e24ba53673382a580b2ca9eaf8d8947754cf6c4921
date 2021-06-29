@@ -1,0 +1,2 @@
+I"Ú<p>I just completed my Tic Tac Toe project with an unbeatable AI. I was able to get almost every part working how I wanted, except for one small bit of code in which I wanted an enumerator to iterate over nested arrays in a parent array and compare them to each other. Specifically, I wanted my AI to check whether the opponent player had a potential double. In other words, to check if there are two intersecting edges occupied by the opponent (and only the opponent).</p>
+:ET

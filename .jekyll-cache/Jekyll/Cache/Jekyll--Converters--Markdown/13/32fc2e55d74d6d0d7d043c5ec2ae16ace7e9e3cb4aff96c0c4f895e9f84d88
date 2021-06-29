@@ -1,0 +1,85 @@
+I"<p>I just completed my Tic Tac Toe project with an unbeatable AI. I was able to get almost every part working how I wanted, except for one small bit of code in which I wanted an enumerator to iterate over nested arrays in a parent array and compare them to each other. Specifically, I wanted my AI to check whether the opponent player had a potential double. In other words, to check if there are two intersecting edges occupied by the opponent (and only the opponent).</p>
+
+<p><img src="http://i.imgur.com/QRRRhJG.png" alt="" /></p>
+
+<p>For example, in the above image, there is a potential double. Player “X” is occupying the top row and the right column, which intersect each other. If player “O” doesn’t play a move somewhere in this intersection, “X” will have a guaranteed win.</p>
+
+<p>To implement the logic of detecting potential doubles, I first programmed the AI to find all instances of lines that don’t go through the center square and that contain exactly one opponent token and two blank spaces.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>opponent_lines = board.game.win_combos.select do |combo|
+   a = []
+   combo.each do |e|
+      if e!=4
+         a &lt;&lt; board.cells[e]
+      end
+   end
+   a.sort == [" ", " ", "#{board.game.opponent.token}"]
+end
+</code></pre></div></div>
+
+<p>This would return a two-dimensional array containing win combination arrays occupied only by the opponent.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>opponent_lines
+#=&gt; [[0,1,2],[2,5,8]]
+</code></pre></div></div>
+
+<p>Next I wanted to compare the nested arrays to each other with <code class="highlighter-rouge">&amp;</code> to check if they intersected at any position on the Tic Tac Toe board.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>opponent_lines.inject(:&amp;)
+#=&gt; [2]
+</code></pre></div></div>
+
+<p>This works fine if there is only one intersection, but it breaks down if your opponent has two possible doubles with two intersecting lines.</p>
+
+<p><img src="http://i.imgur.com/5GQDT4v.png" alt="" /></p>
+
+<p>In this case <code class="highlighter-rouge">opponent_lines</code> is an array with three nested arrays.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>opponent_lines
+#=&gt; [[6,7,8],[0,3,6],[2,5,8]]
+</code></pre></div></div>
+
+<p>The inject method I was using no longer returned a useful value.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>opponent_lines.inject(:&amp;)
+#=&gt; []
+</code></pre></div></div>
+
+<p>Then I saw this approach somewhere on Stack Overflow: <code class="highlighter-rouge">opponent_lines.inject(&amp;:&amp;)</code> and gave it a shot.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>opponent_lines.inject(&amp;:&amp;)
+#=&gt; []
+</code></pre></div></div>
+
+<p>Clearly, this too was useless for my purposes. Apparently it only returns a value found in all three nested arrays. But I needed to see if two out of three nested arrays intersected.</p>
+
+<p>Perhaps iteration was the answer. But I only know how to iterate over an array one element at a time. I tried to find an existing enumerator that could compare multiple nested arrays in a single parent array at once. The closest thing I found was the <a href="https://ruby-doc.org/core-2.4.0/Enumerable.html#method-i-each_cons"><code class="highlighter-rouge">each_cons(n)</code></a> Enumerable. The “cons” is short for consecutive, and the method operates on consecutive elements in an array, where the number of consecutive elements is specified by <code class="highlighter-rouge">n</code>.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>intersects = []
+opponent_lines.each_cons(2) {|e| intersects &lt;&lt; e.inject(:&amp;)}
+intersects
+#=&gt; [[6],[]]
+</code></pre></div></div>
+
+<p>This method also doesn’t work, because it only compares consecutive arrays in <code class="highlighter-rouge">opponent_lines</code>. Remember, in the second scenario, <code class="highlighter-rouge">opponent_lines</code> has three nested arrays:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>opponent_lines
+#=&gt; [[6,7,8],[0,3,6],[2,5,8]]
+</code></pre></div></div>
+
+<p>With the <code class="highlighter-rouge">each_cons(n)</code> method <code class="highlighter-rouge">opponent_lines[0]</code> and <code class="highlighter-rouge">opponent_lines[2]</code> are not compared. I needed a method that returns <code class="highlighter-rouge">[[6],[8]]</code>.</p>
+
+<p>Additional searching produced no existing enumerator that could perform the task I wanted done. So, I changed my approach. I realized I could just flatten the entire <code class="highlighter-rouge">opponent_lines</code> array and find all elements that appeared more than once, and these would indicate intersection points.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>f = opponent_lines.flatten
+intersects = f.select { |e| f.count(e) &gt; 1}.uniq
+
+intersects
+#=&gt; [6,8]
+</code></pre></div></div>
+
+<p>Next, I compared the positions returned by <code class="highlighter-rouge">intersects</code> with available positions on the board, and told the AI to place its token in the appropriate square.</p>
+
+<p>In the end, the code I chose to use worked just fine, and seems abstract and eloquent enough. But I still wonder if there is an enumerator out there that can compare nested arrays to one another?</p>
+
+:ET

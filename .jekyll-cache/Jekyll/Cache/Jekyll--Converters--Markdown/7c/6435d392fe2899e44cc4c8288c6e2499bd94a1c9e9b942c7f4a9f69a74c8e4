@@ -1,0 +1,311 @@
+I"�1<h2 id="introduction">Introduction</h2>
+<p>I created a Sinatra-based web application for my end-of-unit Sinatra Portfolio Project. It is a content management system (CMS) for Sickbay, an ongoing series of live alternative music events in Lafayette, Louisiana. The app is designed to allow the organizer of Sickbay to easily create, read, update, and delete shows and news items, as well as artists and venues.</p>
+
+<p>I deployed the app to <a href="http://www.heroku.com">Heroku</a>, and it is viewable at <a href="http://www.sickbay.party">http://www.sickbay.party</a>.</p>
+
+<p>This video walkthrough demonstrates how to use the app:</p>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/QB-sK-UujMI" frameborder="0" allowfullscreen=""></iframe>
+
+<h2 id="planning-the-project">Planning The Project</h2>
+<p>Before writing any code, I created an outline of the project’s models and their associations:</p>
+
+<ul>
+  <li>Models:
+    <ul>
+      <li><code class="highlighter-rouge">Show</code>, <code class="highlighter-rouge">Artist</code>, <code class="highlighter-rouge">Venue</code>, <code class="highlighter-rouge">News</code>, and <code class="highlighter-rouge">User</code></li>
+    </ul>
+  </li>
+  <li>Associations:
+    <ul>
+      <li>A <code class="highlighter-rouge">show</code> has many <code class="highlighter-rouge">artists</code> and an <code class="highlighter-rouge">artist</code> has many <code class="highlighter-rouge">shows</code> (many to many)</li>
+      <li>A <code class="highlighter-rouge">show</code> belongs to a <code class="highlighter-rouge">venue</code>, and a <code class="highlighter-rouge">venue</code> has many <code class="highlighter-rouge">shows</code> (belongs to, has many)</li>
+      <li>A <code class="highlighter-rouge">venue</code> has many <code class="highlighter-rouge">artists</code> through <code class="highlighter-rouge">shows</code>, an <code class="highlighter-rouge">artist</code> has many venues through <code class="highlighter-rouge">shows</code> (has many through)</li>
+      <li>A <code class="highlighter-rouge">user</code> and a <code class="highlighter-rouge">news</code> item have no relationships with other models</li>
+    </ul>
+  </li>
+</ul>
+
+<p>I created a <code class="highlighter-rouge">show_artists</code> join table and <code class="highlighter-rouge">ShowArtists</code> model to support the many to many relationship between <code class="highlighter-rouge">shows</code> and <code class="highlighter-rouge">artists</code></p>
+
+<p>I then considered the functionality I wanted the application to have. A logged-in user should be able to create, read, update, and delete instances of all models. When not logged in, a visitor should only be able to read a listing of shows and news items.</p>
+
+<ul>
+  <li>There is a total of 15 forms in this project:
+    <ul>
+      <li>Create show, edit show, delete show</li>
+      <li>Create artist, edit artist, delete artist</li>
+      <li>Create venue, edit venue, delete venue</li>
+      <li>Create news, edit news, delete news</li>
+      <li>Create user, edit user, delete user</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Since creating show listings is the main feature of the application, the form to create a show is a complex form. A user can create a new venue and one or multiple new artists when creating a new show.</p>
+
+<p><img src="https://www.dropbox.com/s/r82w7stq7bdj95d/Screenshot%202017-07-13%2010.47.09.png?raw=1" alt="Screenshot of the 'create show' form" width="100%" /></p>
+
+<p>All other forms are simple, creating and editing or deleting an instance of one specified model.</p>
+
+<h2 id="creating-a-sinatra-app-from-scratch">Creating A Sinatra App From Scratch</h2>
+<p>Once the project plan was laid out, I needed to initialize the environment from scratch.</p>
+
+<ol>
+  <li>
+    <p>Create a project directory <code class="highlighter-rouge">sickbay-shows</code></p>
+  </li>
+  <li>
+    <p>Initialize a git repository and <a href="https://help.github.com/articles/adding-an-existing-project-to-github-using-the-command-line/">add the project to GitHub</a></p>
+  </li>
+  <li>
+    <p>Create a <code class="highlighter-rouge">Gemfile</code> containing the following code:</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>source 'http://rubygems.org'
+   
+gem 'sinatra'
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Run <code class="highlighter-rouge">$ bundle install</code> in the terminal’s command line (this creates the <code class="highlighter-rouge">Gemfile.lock</code> file).</p>
+  </li>
+  <li>
+    <p>Create <code class="highlighter-rouge">config.ru</code> file in the main directory, containing the following code (grabbed from a previous Sinatra lab):</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>require './config/environment'
+   
+if ActiveRecord::Migrator.needs_migration?
+  raise 'Migrations are pending. Run `rake db:migrate` to resolve the issue.'
+end
+   
+use Rack::MethodOverride
+use ShowsController
+use ArtistsController
+use VenuesController
+use NewsController
+use UsersController
+run ApplicationController
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Create the <code class="highlighter-rouge">config/environment.rb</code> file (again, grabbing code from a previous Sinatra lab):</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ENV['SINATRA_ENV'] ||= "development"
+
+require 'bundler/setup'
+Bundler.require(:default, ENV['SINATRA_ENV'])
+   
+ActiveRecord::Base.establish_connection(
+  :adapter =&gt; "sqlite3",
+  :database =&gt; "db/#{ENV['SINATRA_ENV']}.sqlite"
+)
+   
+require_all 'app'
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Add gem dependencies in the <code class="highlighter-rouge">Gemfile</code>:</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gem 'sinatra'
+gem 'activerecord', :require =&gt; 'active_record'
+gem 'sinatra-activerecord', :require =&gt; 'sinatra/activerecord'
+gem 'i18n'
+gem 'bcrypt'
+gem 'pry'
+gem 'rack-flash3'
+gem 'rake'
+gem 'require_all'
+gem 'shotgun'
+gem 'sqlite3'
+gem 'thin'
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Create the MVC paradigm (models and their associations, respective controllers, and views):</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>├── app
+│   ├── controllers
+│   │   ├── application_controller.rb
+│   │   ├── artists_controller.rb
+│   │   ├── news_controller.rb
+│   │   ├── shows_controller.rb
+│   │   ├── users_controller.rb
+│   │   └── venues_controller.rb
+│   ├── models
+│   │   ├── concerns
+│   │   │   └── slugifiable.rb
+│   │   ├── artist.rb
+│   │   ├── news.rb
+│   │   ├── show_artist.rb
+│   │   ├── show.rb
+│   │   ├── user.rb
+│   │   └── venue.rb
+│   └── views
+│       ├── artists
+│       │   ├── artist_index.erb
+│       │   ├── create_artist.erb
+│       │   ├── edit_artist.erb
+│       │   └── show_artist.erb
+│       ├── news
+│       │   ├── create_news.erb
+│       │   ├── edit_news.erb
+│       │   └── news_index.erb
+│       ├── shows
+│       │   ├── create_show.erb
+│       │   ├── edit_show.erb
+│       │   ├── not_found.erb
+│       │   ├── show_show.erb
+│       │   └── shows_index.erb
+│       ├── users
+│       │   ├── create_user.erb
+│       │   └── edit_user.erb
+│       ├── venues
+│       │   ├── create_venue.erb
+│       │   ├── edit_venue.erb
+│       │   ├── show_venue.erb
+│       │   └── venues_index.erb
+│       ├── backdoor.erb
+│       ├── dashboard.erb
+│       ├── layout.erb
+│       └── login.erb
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Create a <code class="highlighter-rouge">Rakefile</code> containing the following code (grabbed from a previous Sinatra lab):</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ENV["SINATRA_ENV"] ||= "development"
+   
+require_relative './config/environment'
+require 'sinatra/activerecord/rake'
+   
+# Type `rake -T` on your command line to see the available rake tasks.
+   
+task :console do
+  Pry.start
+end
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Create migrations in <code class="highlighter-rouge">db/migrate</code> directory:</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>create_table :shows do |t|
+   t.string :date
+   t.integer :venue_id
+   t.string :url
+      
+   t.timestamps null: false
+end
+   
+create_table :artists do |t|
+   t.string :name
+      
+   t.timestamps null: false
+end
+		
+create_table :venues do |t|
+   t.string :name
+      
+   t.timestamps null: false
+end
+   
+create_table :show_artists do |t|
+   t.integer :show_id
+   t.integer :artist_id
+      
+   t.timestamps null: false
+end
+   
+create_table :users do |t|
+   t.string :username
+   t.string :email
+   t.string :password_digest
+end
+   
+create_table :news do |t|
+   t.string :date
+   t.string :content
+   t.string :url
+   
+   t.timestamps null: false
+end
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Run migrations with <code class="highlighter-rouge">$ rake db:migrate</code></p>
+  </li>
+  <li>
+    <p>Create <code class="highlighter-rouge">db/seed.rb</code> file, and seed database with <code class="highlighter-rouge">$ rake db:seed</code> (optional, but helpful).</p>
+  </li>
+  <li>
+    <p>Write controllers and views.</p>
+  </li>
+</ol>
+
+<h2 id="deploying-a-sinatra-app-on-heroku">Deploying A Sinatra App On Heroku</h2>
+
+<p>As a web site created for a client, my Sinatra Portfolio Project needed to be useable. <a href="https://devcenter.heroku.com/articles/getting-started-with-ruby-o">This article</a> from the Heroku documentation is a helpful guide on how to deploy an app on their platform. In brief, you must:</p>
+
+<ol>
+  <li>
+    <p><a href="https://signup.heroku.com/dc">Create an account on Heroku</a></p>
+  </li>
+  <li>
+    <p><a href="https://devcenter.heroku.com/articles/heroku-cli#download-and-install">Download the Heroku CLI</a></p>
+  </li>
+  <li>
+    <p>Log in to Heroku with your credentials from the command shell:</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ heroku login
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Add <code class="highlighter-rouge">ruby 2.3.0</code> (or desired version) to the <code class="highlighter-rouge">Gemfile</code>.</p>
+  </li>
+  <li>
+    <p>Create a <code class="highlighter-rouge">Procfile</code> in the project’s root directory with the following code:</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>web: bundle exec rackup config.ru -p $PORT`
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Make sure to switch from SQLite3, which is unsupported by Heroku, to PostgreSQL (two helpful guides: <a href="http://recipes.sinatrarb.com/p/databases/postgresql-activerecord">1</a>, <a href="https://devcenter.heroku.com/articles/sqlite3">2</a>)</p>
+  </li>
+  <li>
+    <p>Push your project to your remote git repository</p>
+  </li>
+  <li>
+    <p>Deploy your app to Heroku!</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ heroku create
+$ git push heroku master
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Instruct Heroku to execute a <code class="highlighter-rouge">web</code> dyno process type:</p>
+
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ heroku ps:scale web=1
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>Visit your app:</p>
+  </li>
+</ol>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   $ heroku open
+</code></pre></div></div>
+
+<p>Ta da!</p>
+
+<p>Hint: I’m no Heroku master (heck, I won’t even claim to understand it), but I have found that scaling down to zero dynos, then back up to one, has been helpful in resolving glitches on my app:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   $ heroku ps:scale web=0
+   $ heroku ps:scale web=1
+</code></pre></div></div>
+
+<h2 id="resources">Resources</h2>
+<ul>
+  <li><a href="http://www.sickbay.party">Sickbay CMS Sinatra Portfolio Project</a></li>
+  <li><a href="https://github.com/dalmaboros/sickbay-shows">GitHub repository</a></li>
+  <li><a href="https://www.youtube.com/watch?v=QB-sK-UujMI">Video walkthrough</a></li>
+</ul>
+:ET

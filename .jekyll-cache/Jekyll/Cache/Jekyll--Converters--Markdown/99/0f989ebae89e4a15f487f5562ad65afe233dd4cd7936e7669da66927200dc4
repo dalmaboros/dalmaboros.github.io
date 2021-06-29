@@ -1,0 +1,14 @@
+I"(<p>For my final school project, the React-Redux Portfolio Project, I chose to synthesize an amalgam of some of my greatest interests in life: pop culture, the 90’s, vintage fashion, and digital nostalgia.</p>
+
+<p>Yes, I created <a href="https://www.github.com/dalmaboros/chers_wardrobe">Cher’s iconic wardrobe program</a> from the opening scene of Clueless. You’re welcome.</p>
+
+<p><img src="https://i.imgur.com/T16U8bA.png" width="100%" /></p>
+
+<p>The app is minimal in functionality, but later in this post I will detail my plans for future iterations. As it exists right now, all you can do is what we were shown on screen by a young Alicia Silverstone 26 years ago–scroll through a collection of preppy 90’s attire and programatically determine matching outfit combinations. (Spoiler alert: there is only one.)</p>
+
+<p>As far as technical logistics, it’s built with React and Redux. There are a handful of stateful and stateless components, implementation of RESTful routing with <code class="highlighter-rouge">react-router</code>, and handling of asynchronous actions using <code class="highlighter-rouge">redux-thunk</code> middleware. Styling is achieved with flexbox and custom CSS.</p>
+
+<p>My original intention for this app was to be a platform for showcasing my inventory of the 200+ pieces of vintage clothing I still have from the days when I sold vintage clothes as a side hustle. I’m happy to have recreated the original program as it was portrayed on the screen, and to have a foundation to expand upon.</p>
+
+<p>Beyond some already much-needed styling tweaks and code refactoring, my future plans include teaching a neural network my sense of style to use as an AI for determining mismatching and matching outfits, and implementing image uploading and user authentication capabilities. I envision</p>
+:ET

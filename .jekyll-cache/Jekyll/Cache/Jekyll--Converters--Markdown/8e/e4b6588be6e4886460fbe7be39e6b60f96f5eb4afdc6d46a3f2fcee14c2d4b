@@ -1,0 +1,57 @@
+I"<p>Amongst the many technical requirements for the Rails With JavaScript portfolio project, one in particular stands out near the top of the list, in bold monospaced type:</p>
+
+<p><strong>Do not use <code class="highlighter-rouge">remote: true</code> in this application.</strong></p>
+
+<p>I immediately want to use <code class="highlighter-rouge">remote: true</code>. But I don’t know what it is. If I at one point learned what this is, I can’t remember. A Google search for “remote: true” yields some <a href="https://guides.rubyonrails.org/working_with_javascript_in_rails.html#link-to">barely-there Rails documentation</a> on Rails Guides, and a handful of more promising articles entitled <a href="https://medium.com/@AdamKing0126/ajax-and-rails-demystifying-remote-true-fe51ba2ce819"><em>AJAX and Rails: Demystifying :remote =&gt; true</em></a>, <a href="https://medium.com/@codenode/how-to-use-remote-true-to-make-ajax-calls-in-rails-3ecbed40869b"><em>How to Use remote: true to Make Ajax Calls in Rails</em></a>, and <a href="http://www.korenlc.com/remote-true-in-rails-forms/"><em>:remote =&gt; true in Rails Forms</em></a>.</p>
+
+<p>By this limited information I can gather that <code class="highlighter-rouge">remote: true</code> is used to make AJAX calls in Rails. Unfortunately this deduction doesn’t give me a solid grasp on the concept, so I am forced to read at least one of these articles.</p>
+
+<h2 id="what-is-remote-true">What is <code class="highlighter-rouge">remote: true</code>?</h2>
+
+<p><code class="highlighter-rouge">remote: true</code> is a Rails helper. This helper can be added to any other Rails helper that generates a web request. For example, <code class="highlighter-rouge">remote: true</code> can be added to the <code class="highlighter-rouge">link_to</code> and <code class="highlighter-rouge">button_to</code> helpers, like so:</p>
+
+<p><code class="highlighter-rouge">&lt;%= link_to "an article", @article, remote: true %&gt;</code></p>
+
+<p>or</p>
+
+<p><code class="highlighter-rouge">&lt;%= button_to "An article", @article, remote: true %&gt;</code></p>
+
+<p><strong>So, what does <code class="highlighter-rouge">remote: true</code> do?</strong></p>
+
+<p>The <code class="highlighter-rouge">remote: true</code> helper prevents the default action of the object from occuring, and submits an asynchronous web request to the object’s associated controller action. Using the examples above, a <code class="highlighter-rouge">remote: true</code> helper added to either the <code class="highlighter-rouge">link_to</code> or <code class="highlighter-rouge">button_to</code> helper would submit an asynchronous request to the <code class="highlighter-rouge">show</code> action of the <code class="highlighter-rouge">articles</code> controller.</p>
+
+<p><strong>What does <code class="highlighter-rouge">remote: true</code> not do?</strong></p>
+
+<p>The <code class="highlighter-rouge">remote: true</code> helper does nothing on the server side. It doesn’t handle the AJAX request, nor the server’s response, and it does not manipulate the DOM. These things must still be coded manually in the controller and with JavaScript on the clientside in order to render data from the server without a page refresh.</p>
+
+<h2 id="and-why-cant-i-use-it">And Why Can’t I Use It?</h2>
+
+<p>The <code class="highlighter-rouge">remote: true</code> helper is a “Rails magic” shortcut for sending asynchronous web requests to the server. It eliminates the need to code out explicit asynchronous web requests, such as the following jQuery <code class="highlighter-rouge">$.ajax</code> request:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$(function(){
+  $("#my_form").on("submit", function(event){
+    $.ajax({
+      type: "POST",
+      url: this.action,
+      data: $(this).serialize(),
+      success: function(response) {
+        //update the DOM
+      }
+    });
+    event.preventDefault();
+  });
+})
+</code></pre></div></div>
+
+<p>Instead, the above code need not be written if we simply add the <code class="highlighter-rouge">remote: true</code> helper to a <code class="highlighter-rouge">form_for</code> helper:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;%= form_for @article, :remote =&gt; true do |f| %&gt;
+  &lt;%= f.text_field :title %&gt;
+  &lt;%= f.submit %&gt;
+&lt;% end %&gt;
+</code></pre></div></div>
+
+<p>Both methods allow form data to be submitted to the server without refreshing the page.</p>
+
+<p>The Rails with JavaScript portfolio project is an exercise in understanding how to add dynamic features to a Rails application that are possible only through JavaScript and a JSON API. Without the use of <code class="highlighter-rouge">remote: true</code>, we are forced to explicitly code asynchronous web requests such as <code class="highlighter-rouge">jQuery.ajax()</code> or <code class="highlighter-rouge">fetch()</code>. Like many other “Rails magic” shortcuts introduced to us in the <a href="http://learn.co">Learn.co</a> curriculum, we don’t use it so we can understand how it works.</p>
+:ET
