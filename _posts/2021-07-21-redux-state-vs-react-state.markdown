@@ -35,6 +35,7 @@ This is what the `BrowsersContainer` originally looked like:
 
 ```js
 // BrowsersContainer.js
+
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
@@ -137,6 +138,7 @@ Since I want to add local state to this component, I add it to the `constructor(
 
 ```js
 // BrowsersContainer.js
+
 ...
 class BrowsersContainer extends Component {
     constructor(props) {
@@ -156,6 +158,7 @@ I still want to handle the click event with `handleOnClick`, but now I'll use on
 
 ```js
 // BrowsersContainer.js
+
 ...
 handleOnClick = () => {
     if (this.state.isMatch) {
@@ -173,6 +176,7 @@ Where then, is `isMatch` determined now? I move the logic of the old `isMatch()`
 
 ```js
 // BrowsersContainer.js
+
 ...
 static getDerivedStateFromProps(props, state) {
     if (props.clothes.tops && props.clothes.bottoms) {
@@ -201,6 +205,7 @@ The `handleClose` method is modified to instead of calling a dispatch, to set th
 
 ```js
 // BrowsersContainer.js
+
 ...
 handleClose = () => {
     this.setState({modalVisible: false})
@@ -208,12 +213,15 @@ handleClose = () => {
 ...
 ```
 
-5. `mapDispatchToProps` can now be removed entirely, since nothing is dispatched from this component anymore. We can also stop importing the `hideModal` and `showModal` action creators.
+
+`mapDispatchToProps` can now be removed entirely, since nothing is dispatched from this component anymore. We can also stop importing the `hideModal` and `showModal` action creators.
 
 The final refactored `BrowsersContainer` component looks like this:
 
+
 ```js
 // BrowsersContainer.js
+
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
